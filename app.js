@@ -17,7 +17,6 @@ const corsOption = {
     'https://main--gahyeondwitter.netlify.app',
     'http://localhost:3000',
     'http://localhost:8080',
-    'https://www.dwitter.shop',
     'ec2-43-203-10-162.ap-northeast-2.compute.amazonaws.com',
   ],
   optionsSuccessStatus: 200,

@@ -4,7 +4,6 @@ import 'express-async-errors';
 import * as userRepository from '../data/auth.js';
 import { config } from '../config.js';
 
-
 export async function signup(req, res) {
   const { username, password, name, email, url } = req.body;
   const found = await userRepository.findByUsername(username);

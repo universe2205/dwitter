@@ -2,11 +2,11 @@ import { config } from '../config.js';
 import bcrypt from 'bcrypt';
 
 export const csrfCheck = (req, res, next) => {
-  if (req.method === 'GET' || req.method === 'HEAD' || req.method === 'OPTIONS') {
+  if (req.method === 'GET' || req.method === 'OPTIONS' || req.method === 'HEAD') {
     return next();
   }
-
-  const csrfHeader = req.get['dwitter-csrf-token'];
+  const csrfHeader = req.get('dwitter-csrf-token');
+  console.log(csrfHeader);
 
   if (!csrfHeader) {
     console.warn('Missing required "dwitter-csrf-token" header.', req.headers.origin);

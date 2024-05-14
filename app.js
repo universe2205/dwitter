@@ -3,6 +3,7 @@ import 'express-async-errors';
 import cors from 'cors';
 import morgan from 'morgan';
 import helmet from 'helmet';
+import cookieParser from 'cookie-parser';
 import tweetsRouter from './router/tweets.js';
 import authRouter from './router/auth.js';
 import { config } from './config.js';
@@ -14,9 +15,11 @@ const app = express();
 const corsOption = {
   origin: config.cors.allowedOrigin,
   optionSuccessStatus: 200,
+  credentials: true,
 };
 
 app.use(express.json());
+app.use(cookieParser);
 app.use(helmet());
 app.use(cors(corsOption));
 app.use(morgan('tiny'));

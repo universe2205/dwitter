@@ -5,11 +5,17 @@ import { config } from '../config.js';
 const AUTH_ERROR = { message: 'Authentication failed' };
 
 export const isAuth = async (req, res, next) => {
+  let token;
   const authHeader = req.get('Authorization');
-  if (!(authHeader && authHeader.startsWith('Bearer '))) {
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    token = authHeader.split(' ')[1];
+  }
+  if (!token) {
+    token = req.cookies['token'];
+  }
+  if (!token) { 
     return res.status(401).json(AUTH_ERROR);
   }
-  const token = authHeader.split(' ')[1];
   try {
     let payload = jwt.verify(token, config.jwt.secretKey);
     const user = await userRepository.findById(payload.userId);

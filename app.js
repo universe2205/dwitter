@@ -14,12 +14,12 @@ const app = express();
 
 const corsOption = {
   origin: config.cors.allowedOrigin,
-  optionSuccessStatus: 200,
+  optionsSuccessStatus: 200,
   credentials: true,
 };
 
 app.use(express.json());
-app.use(cookieParser);
+app.use(cookieParser());
 app.use(helmet());
 app.use(cors(corsOption));
 app.use(morgan('tiny'));

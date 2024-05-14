@@ -30,7 +30,7 @@ app.use(helmet());
 app.use(morgan('tiny'));
 
 app.get('/', (req, res) => {
-  res.send('hello');
+  res.sendStatus(200);
 });
 app.use('/tweets', tweetsRouter);
 app.use('/auth', authRouter);

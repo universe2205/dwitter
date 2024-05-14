@@ -13,15 +13,15 @@ import { connectDB } from './db/database.js';
 const app = express();
 
 const corsOption = {
-  origin: config.cors.allowedOrigin,
+  origin: ['https://main--gahyeondwitter.netlify.app', 'http://localhost:3000', 'http://localhost:8080'],
   optionsSuccessStatus: 200,
-  credential: true,
+  credentials: true,
 };
 
+app.use(cors(corsOption));
 app.use(express.json());
 app.use(cookieParser());
 app.use(helmet());
-app.use(cors(corsOption));
 app.use(morgan('tiny'));
 
 app.use('/tweets', tweetsRouter);

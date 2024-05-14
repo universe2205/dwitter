@@ -4,6 +4,7 @@ import 'express-async-errors';
 import * as userRepository from '../data/auth.js';
 import { config } from '../config.js';
 
+
 export async function signup(req, res) {
   const { username, password, name, email, url } = req.body;
   const found = await userRepository.findByUsername(username);
@@ -42,20 +43,33 @@ function createJwtToken(userId) {
   return jwt.sign({ userId }, config.jwt.secretKey, { expiresIn: config.jwt.ExpiresIn });
 }
 
-function setToken(res, token) { 
-  const options = {
-    httpOnly: true,
-    sameSite: 'none',
-    secure: true,
-    maxAge: config.jwt.ExpiresIn * 1000,
-  }
-  res.cookie('token', token, options);
-}
-
 export async function me(req, res) {
   const user = await userRepository.findById(req.userId);
   if (!user) {
     return res.status(404).json({ message: 'User not found' });
   }
   res.status(200).json({ token: req.token, username: user.username });
+}
+
+export async function logout(req, res) {
+  setToken(res, '');
+  res.sendStatus(200).json({ message: 'Logged out' });
+}
+function setToken(res, token) {
+  const options = {
+    httpOnly: true,
+    sameSite: 'none',
+    secure: true,
+    maxAge: config.jwt.ExpiresIn * 1000,
+  };
+  res.cookie('token', token, options);
+}
+
+export async function csrfToken(req, res) {
+  const csrfToken = await generateCSRFToken();
+  res.status(200).json({ csrfToken });
+}
+
+async function generateCSRFToken() {
+  return bcrypt.hash(config.csrf.plainToken, 1);
 }

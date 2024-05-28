@@ -13,16 +13,6 @@ const validateCredential = [
   validate,
 ];
 
-const validateSignup = [
-  ...validateCredential,
-  body('name').trim().notEmpty().withMessage('name is required'),
-  body('email').trim().isEmail().withMessage('email is not valid'),
-  body('url').trim().isURL().withMessage('url is not valid').optional({ nullable: true, checkFalsy: true }),
-  validate,
-];
-
-router.post('/signup', validateSignup, authController.signup);
-
 router.post('/login', validateCredential, authController.login);
 
 router.post('/logout', authController.logout);

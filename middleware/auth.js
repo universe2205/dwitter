@@ -13,7 +13,7 @@ export const isAuth = async (req, res, next) => {
   if (!token) {
     token = req.cookies['token'];
   }
-  if (!token) { 
+  if (!token) {
     return res.status(401).json(AUTH_ERROR);
   }
   try {
@@ -24,5 +24,23 @@ export const isAuth = async (req, res, next) => {
     next();
   } catch (e) {
     return res.status(401).json(AUTH_ERROR);
+  }
+};
+
+export const authHandler = async (req) => {
+  const authHeader = req.get('Authorization');
+  const token = authHeader.split(' ')[1];
+  try {
+    const decoded = jwt.verify(token, config.jwt.secretKey);
+    const user = await userRepository.findById(decoded.userId);
+    if (!user) {
+      throw { status: 401, ...AUTH_ERROR };
+    }
+    req.userId = user.id;
+    req.token = decoded;
+    return true;
+  } catch (e) {
+    console.log(err);
+    throw { status: 401, ...AUTH_ERROR };
   }
 };

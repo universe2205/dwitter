@@ -18,7 +18,7 @@ useVirtualId(tweetSchema);
 const Tweet = mongoose.model('Tweet', tweetSchema);
 
 export async function getAll() {
-  return Tweet.find().sort({ createdAt: -1 });
+  return Tweet.find().sort({ createdAt: -1 }).lean();
 }
 
 export async function getAllByUsername(username) {
@@ -50,5 +50,3 @@ export async function update(id, text) {
 export async function remove(id) {
   return Tweet.findByIdAndDelete(id);
 }
-
-

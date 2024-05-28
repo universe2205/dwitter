@@ -22,7 +22,7 @@ export async function getAll() {
 }
 
 export async function getAllByUsername(username) {
-  return Tweet.find({ username }).sort({ createdAt: -1 });
+  return Tweet.find({ username }).sort({ createdAt: -1 }).lean();
 }
 
 export async function getById(id) {

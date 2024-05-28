@@ -69,7 +69,7 @@ app.use((req, res, next) => {
   res.sendStatus(404);
 });
 
-app.use((err, req, res, next) => {
+app.use((error, req, res, next) => {
   console.error(err);
   res.status(err.status || 500).json({
     message: err.message,

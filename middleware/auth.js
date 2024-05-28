@@ -31,15 +31,17 @@ export const authHandler = async (req) => {
   const authHeader = req.get('Authorization');
   const token = authHeader.split(' ')[1];
   try {
-    const decoded = jwt.verify(token, config.jwt.secretKey);
-    const user = await userRepository.findById(decoded.userId);
+    console.log(token, config.jwt.secretKey);
+    let payload = jwt.verify(token, config.jwt.secretKey);
+    console.log(`payload is ${payload}`);
+    const user = await userRepository.findById(payload.userId);
     if (!user) {
       throw { status: 401, ...AUTH_ERROR };
     }
-    req.userId = user.id;
-    req.token = decoded;
+    req.userId = user.id; // req.customData 리퀘스트에 커스텀 데이터 등록
+    req.token = payload;
     return true;
-  } catch (e) {
+  } catch (err) {
     console.log(err);
     throw { status: 401, ...AUTH_ERROR };
   }

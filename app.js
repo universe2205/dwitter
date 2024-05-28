@@ -36,6 +36,7 @@ app.use(rateLimit);
 
 app.get('/', (req, res) => {
   res.sendStatus(200);
+  console.log('home');
 });
 app.use(csrfCheck);
 

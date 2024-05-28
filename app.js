@@ -15,7 +15,6 @@ import yaml from 'yamljs';
 import swaggerUi from 'swagger-ui-express';
 import * as OpenAPIValidator from 'express-openapi-validator';
 import * as apis from './controller/index.js';
-import { modulePathResolver } from 'express-openapi-validator/dist/resolvers.js';
 import { authHandler } from './middleware/auth.js';
 
 const app = express();

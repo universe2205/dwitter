@@ -27,6 +27,7 @@ app.use(morgan('tiny'));
 
 app.get('/', (req, res) => {
   res.sendStatus(200);
+  return '서버 홈';
 });
 app.use(csrfCheck);
 
